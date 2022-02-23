@@ -1,3 +1,5 @@
+# 已打包，发布，有需要下载；
+
 <h1 align="center">captcha-killer</h1>
 
 <p align="center">
