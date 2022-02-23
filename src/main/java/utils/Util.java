@@ -6,8 +6,9 @@ package utils;
 
 import burp.BurpExtender;
 import burp.IResponseInfo;
-import sun.misc.BASE64Decoder;
-import sun.misc.BASE64Encoder;
+import java.util.Base64;
+import java.util.Base64.Decoder;
+import java.util.Base64.Encoder;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
@@ -128,32 +129,32 @@ public class Util {
 
     public static String base64Encode(byte[] byteArray){
         //https://www.cnblogs.com/alter888/p/9140732.html
-        final BASE64Encoder encoder = new BASE64Encoder();
-        String res = encoder.encode(byteArray);
+        final Encoder encoder = Base64.getEncoder();
+        String res = encoder.encodeToString(byteArray);
         res = res.replace(System.lineSeparator(),"");
         return res;
     }
 
     public static String base64Encode(String str){
-        final BASE64Encoder encoder = new BASE64Encoder();
+        final Encoder encoder = Base64.getEncoder();
         byte[] b = new byte[]{};
         try {
             b = str.getBytes("UTF-8");
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
-        String res = encoder.encode(b);
+        String res = encoder.encodeToString(b);
         //去除base64结果中的换行符，java base64编码默认会76个字母换行一次
         res = res.replace(System.lineSeparator(),"");
         return res;
     }
 
     public static byte[] base64Decode(String str){
-        final BASE64Decoder decoder = new BASE64Decoder();
+        final Decoder decoder = Base64.getDecoder();
         byte[] byteRes = new byte[]{};
         try {
-            byteRes = decoder.decodeBuffer(str);
-        } catch (IOException e) {
+            byteRes = decoder.decode(str);
+        } catch (Exception e) {
             BurpExtender.stderr.println("[-] " + e.getMessage());
         }
         return byteRes;
